@@ -1,7 +1,8 @@
 package tests
 
 import (
-	"fmt"
+	"bytes"
+	"encoding/json"
 	"net/http"
 	"testing"
 
@@ -59,6 +60,32 @@ func TestFindPetByIdReturnPetNotFound(t *testing.T) {
 	s := "0"
 	req, _ := http.NewRequest("GET", ROOT_URL+PET_PER_ID+s, nil)
 	res, _ := client.Do(req)
-	fmt.Println(res.Request.URL)
 	assert.Equal(t, res.StatusCode, 404)
+}
+
+func TestAddNewPetToStoreReturnsStatusOk(t *testing.T) {
+	body := &Pet{
+		Id:     12345678,
+		Name:   "Fiddo",
+		Status: "available",
+	}
+	payloadBuffer := new(bytes.Buffer)
+	json.NewEncoder(payloadBuffer).Encode(body)
+	req, _ := http.NewRequest("POST", ROOT_URL+PET_PER_ID, payloadBuffer)
+	req.Header.Add("Content-Type", "application/json")
+	res, _ := client.Do(req)
+	assert.Equal(t, res.StatusCode, 200)
+}
+func TestAddNewPetToStoreReturnsPayload(t *testing.T) {
+	body := &Pet{
+		Id:     12345678,
+		Name:   "Fiddo",
+		Status: "available",
+	}
+	payloadBuffer := new(bytes.Buffer)
+	json.NewEncoder(payloadBuffer).Encode(body)
+	req, _ := http.NewRequest("POST", ROOT_URL+PET_PER_ID, payloadBuffer)
+	req.Header.Add("Content-Type", "application/json")
+	res, _ := client.Do(req)
+	assert.NotEmpty(t, res.Body)
 }
