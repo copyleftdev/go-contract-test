@@ -55,12 +55,6 @@ func TestFindByStatusSoldBodyIsNotEmpty(t *testing.T) {
 	assert.NotEmpty(t, res.Body)
 }
 
-func TestFindPetByIdReturnStatusOk(t *testing.T) {
-	s := "6666"
-	req, _ := http.NewRequest("GET", ROOT_URL+PET_PER_ID+s, nil)
-	res, _ := client.Do(req)
-	assert.Equal(t, res.StatusCode, 200)
-}
 func TestFindPetByIdReturnPetNotFound(t *testing.T) {
 	s := "0"
 	req, _ := http.NewRequest("GET", ROOT_URL+PET_PER_ID+s, nil)
