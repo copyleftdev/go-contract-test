@@ -104,7 +104,7 @@ func TestUploadPetImageReturnStatusCodeOk(t *testing.T) {
 	file, errFile1 := os.Open("data/sample.txt")
 	defer file.Close()
 	part1,
-		errFile1 := writer.CreateFormFile("file", filepath.Base("/home/ops/Documents/HIPPA.pdf"))
+		errFile1 := writer.CreateFormFile("file", filepath.Base("data/sample.txt"))
 	_, errFile1 = io.Copy(part1, file)
 	if errFile1 != nil {
 		return
